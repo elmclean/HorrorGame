@@ -1,5 +1,6 @@
 package com.example.elmclean.horrorgame;
 
+import android.app.Activity;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,11 +18,10 @@ public class MainActivity extends AppCompatActivity {
         TextView titleText = (TextView) findViewById(R.id.title);
         Button newGame = (Button) findViewById(R.id.new_game);
         Button resume = (Button) findViewById(R.id.resume);
-        Button quit = (Button) findViewById(R.id.quit);
 
         titleText.setTypeface(type);
         newGame.setTypeface(type);
         resume.setTypeface(type);
-        quit.setTypeface(type);
     }
+
 }
