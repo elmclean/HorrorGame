@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name"></string>
     <string name="game_title">The Witch\'s House</string>
+
+    <string name="screen1">Viola finds herself in the middle of a forest. Looking around she sees a small
+    cat sitting on a tree stump. A rotten log sits to her left, full of bugs and moss.\n\n
+    \"Hello,\" the cat says. \"You\'re up and at \'em eh?\"\n\n
+    Viola searches her pockets and finds a letter. It reads:\n\n
+    \"I don\'t mind if you go to her house, but just stay away from the forest. Hope to see you home soon. \n-Dad\"\n\n
+    Viola walks over to the sign post in the middle of the grove. One sign points to the north with the
+    description: \".....\'s House\". The other sign points south with the description: \"Out of the Forest\".\n\n</string>
+
+    <string name="blocked_roses">The path is blocked by a small patch of roses.</string>
 </resources>
