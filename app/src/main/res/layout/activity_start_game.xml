@@ -7,7 +7,7 @@
     tools:context="com.example.elmclean.horrorgame.StartGame">
 
     <ImageView
-        android:id="@+id/background"
+        android:id="@+id/backgroundLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/start_game"
@@ -21,7 +21,7 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:id="@+id/scrollView"
+        android:id="@+id/textLayout"
         android:layout_gravity="left|top" >
 
         <LinearLayout
@@ -29,7 +29,8 @@
             android:layout_height="0dip"
             android:layout_weight="1"
             android:gravity="center|bottom"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:id="@+id/buttonLayout">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -55,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center"
                 android:text="Take the South path"
-                />
+                android:onClick="toTheSouth"/>
         </LinearLayout>
     </ScrollView>
 

@@ -11,4 +11,8 @@
     description: \".....\'s House\". The other sign points south with the description: \"Out of the Forest\".\n\n</string>
 
     <string name="blocked_roses">The path is blocked by a small patch of roses.</string>
+
+    <string name="the_south">Viola looks around and finds the way is blocked by a startlingly huge patch of roses.\n\n
+    There is a small path that leads through the woods to the left. Viola walks carefully through the foliage and
+    finds an axe lodged in a tree.</string>
 </resources>

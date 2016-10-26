@@ -16,9 +16,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".StartGame" />
-        <activity android:name=".TheNorth"></activity>
+        <activity android:name=".TheNorth" />
 
-        <service android:enabled="true" android:name=".MusicService" />
+        <service
+            android:name=".MusicService"
+            android:enabled="true" />
+
+        <activity android:name=".TheSouth"></activity>
     </application>
 
 </manifest>
