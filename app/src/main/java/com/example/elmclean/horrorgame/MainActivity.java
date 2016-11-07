@@ -23,6 +23,18 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    private boolean mIsBound = false;
+    private MusicService mServ;
+    private ServiceConnection Scon = new ServiceConnection(){
+        public void onServiceConnected(ComponentName name, IBinder
+                binder) {
+            mServ = ((MusicService.ServiceBinder)binder).getService();
+        }
+        public void onServiceDisconnected(ComponentName name) {
+            mServ = null;
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,15 +49,35 @@ public class MainActivity extends AppCompatActivity {
         newGame.setTypeface(type);
         resume.setTypeface(type);
 
-        Intent svc = new Intent(this, MusicService.class);
-        svc.setAction("com.example.MusicService");
-        startService(svc);
+        doBindService();
+
+        Intent music = new Intent();
+        music.setClass(this, MusicService.class);
+        music.putExtra("MUSIC_NAME", "lost_chair");
+        startService(music);
     }
 
     public void startGame(View v)
     {
+        doUnbindService();
+
         stopService(new Intent(MainActivity.this,MusicService.class));
         Intent intent = new Intent(this, StartGame.class);
         startActivity(intent);
+    }
+
+    public void doBindService(){
+        bindService(new Intent(this,MusicService.class),
+                Scon,Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    public void doUnbindService()
+    {
+        if(mIsBound)
+        {
+            unbindService(Scon);
+            mIsBound = false;
+        }
     }
 }

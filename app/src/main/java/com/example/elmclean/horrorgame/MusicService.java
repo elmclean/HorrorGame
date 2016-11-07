@@ -1,57 +1,121 @@
 package com.example.elmclean.horrorgame;
-import android.app.Service;
-import android.content.Intent;
-import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnErrorListener;
-import android.os.Binder;
-import android.os.IBinder;
-import android.widget.Toast;
 
 /**
  * Created by elmclean on 10/24/2016.
  */
 
-public class MusicService extends Service {
-    private static final String TAG = null;
-    MediaPlayer player;
-    public IBinder onBind(Intent arg0) {
+import android.app.Service;
+import android.content.Intent;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnErrorListener;
+import android.os.Binder;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.widget.Toast;
 
-        return null;
+public class MusicService extends Service implements MediaPlayer.OnErrorListener {
+
+    private final IBinder mBinder = new ServiceBinder();
+    MediaPlayer mPlayer;
+    private int length = 0;
+    public static final String MUSIC_NAME = "MUSIC_NAME";
+    public String songName = "";
+
+    public MusicService() {
     }
+
+    public class ServiceBinder extends Binder {
+        public MusicService getService() {
+            return MusicService.this;
+        }
+    }
+
+    @Override
+    public IBinder onBind(Intent arg0) {
+        return mBinder;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
-        player = MediaPlayer.create(this, R.raw.lost_chair);
-        player.setLooping(true);
-        player.setVolume(100,100);
 
     }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        player.start();
-        return 1;
+        Bundle extras = intent.getExtras();
+        songName = extras.getString("MUSIC_NAME");
+
+        if(songName.equals("lost_chair")) {
+            mPlayer = MediaPlayer.create(this, R.raw.lost_chair);
+        } else {
+            mPlayer = MediaPlayer.create(this, R.raw.warehouse);
+        }
+        mPlayer.setOnErrorListener(this);
+
+        if (mPlayer != null) {
+            mPlayer.setLooping(true);
+            mPlayer.setVolume(100, 100);
+        }
+
+        mPlayer.setOnErrorListener(new OnErrorListener() {
+            public boolean onError(MediaPlayer mp, int what, int
+                    extra) {
+
+                onError(mPlayer, what, extra);
+                return true;
+            }
+        });
+
+
+        mPlayer.start();
+        return START_STICKY;
     }
 
-    public void onStart(Intent intent, int startId) {
-
+    public void pauseMusic() {
+        if (mPlayer.isPlaying()) {
+            mPlayer.pause();
+            length = mPlayer.getCurrentPosition();
+        }
     }
-    public IBinder onUnBind(Intent arg0) {
-        return null;
+
+    public void resumeMusic() {
+        if (mPlayer.isPlaying() == false) {
+            mPlayer.seekTo(length);
+            mPlayer.start();
+        }
     }
 
-    public void onStop() {
-
+    public void stopMusic() {
+        mPlayer.stop();
+        mPlayer.release();
+        mPlayer = null;
     }
-    public void onPause() {
 
-    }
     @Override
     public void onDestroy() {
-        player.stop();
-        player.release();
+        super.onDestroy();
+        if (mPlayer != null) {
+            try {
+                mPlayer.stop();
+                mPlayer.release();
+            } finally {
+                mPlayer = null;
+            }
+        }
     }
 
-    @Override
-    public void onLowMemory() {
+    public boolean onError(MediaPlayer mp, int what, int extra) {
 
+        Toast.makeText(this, "music player failed", Toast.LENGTH_SHORT).show();
+        if (mPlayer != null) {
+            try {
+                mPlayer.stop();
+                mPlayer.release();
+            } finally {
+                mPlayer = null;
+            }
+        }
+        return false;
     }
 }
