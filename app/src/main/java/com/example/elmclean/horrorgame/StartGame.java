@@ -23,6 +23,7 @@ public class StartGame extends AppCompatActivity {
     public int messageIndex = 0;
     public int choiceIndex = 0;
     List<String> message = new ArrayList<String>();
+    public final TextView dialogBox = (TextView) findViewById(R.id.storyText);
 
     private boolean mIsBound = false;
     private MusicService mServ;
@@ -51,16 +52,18 @@ public class StartGame extends AppCompatActivity {
         music.putExtra("MUSIC_NAME", "warehouse");
         startService(music);
 
-        TextView dialogBox = (TextView) findViewById(R.id.storyText);
+        showDialog();
+    }
+
+    public void showDialog() {
         dialogBox.setText(message.get(messageIndex));
+        messageIndex = messageIndex + 1;
     }
 
     public void nextDialog(View v) {
-        messageIndex = messageIndex + 1;
-        final TextView dialogBox = (TextView) findViewById(R.id.storyText);
 
         if(messageIndex < message.size()) {
-            dialogBox.setText(message.get(messageIndex));
+            showDialog();
         } else {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setMessage("Which path do you want to take?");
