@@ -8,7 +8,13 @@ import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TheNorth extends AppCompatActivity {
+    public int messageIndex = 0;
+    List<String> message = new ArrayList<String>();
+
     private boolean mIsBound = false;
     private MusicService mServ;
     private ServiceConnection Scon = new ServiceConnection(){
@@ -33,6 +39,8 @@ public class TheNorth extends AppCompatActivity {
         music.setClass(this, MusicService.class);
         music.putExtra("MUSIC_NAME", "warehouse");
         startService(music);
+
+
     }
 
     public void doBindService(){

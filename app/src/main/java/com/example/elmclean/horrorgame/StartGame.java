@@ -2,9 +2,11 @@ package com.example.elmclean.horrorgame;
 
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,9 +14,15 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StartGame extends AppCompatActivity {
 
     public Inventory gameInventory = new Inventory();
+    public int messageIndex = 0;
+    public int choiceIndex = 0;
+    List<String> message = new ArrayList<String>();
 
     private boolean mIsBound = false;
     private MusicService mServ;
@@ -34,6 +42,7 @@ public class StartGame extends AppCompatActivity {
         setContentView(R.layout.activity_start_game);
 
         gameInventory.addItem("Letter");
+        message.add("Viola finds herself in the middle of a forest. Looking around she sees a small cat sitting on a tree stump. A rotten log sits to her left, full of bugs and moss.");
 
         doBindService();
 
@@ -41,28 +50,45 @@ public class StartGame extends AppCompatActivity {
         music.setClass(this, MusicService.class);
         music.putExtra("MUSIC_NAME", "warehouse");
         startService(music);
+
+        TextView dialogBox = (TextView) findViewById(R.id.storyText);
+        dialogBox.setText(message.get(messageIndex));
     }
 
-    public void toTheNorth(View v)
-    {
-        if(gameInventory.searchInventory("Machete")) {
-            Intent intent = new Intent(this, TheNorth.class);
-            startActivity(intent);
+    public void nextDialog(View v) {
+        messageIndex = messageIndex + 1;
+        final TextView dialogBox = (TextView) findViewById(R.id.storyText);
+
+        if(messageIndex < message.size()) {
+            dialogBox.setText(message.get(messageIndex));
         } else {
-            LinearLayout buttonLayout = (LinearLayout) findViewById(R.id.buttonLayout);
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setMessage("Which path do you want to take?");
 
-            TextView story = (TextView) findViewById(R.id.storyText);
-            story.setText(getString(R.string.blocked_roses));
+            alert.setNegativeButton("North", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    if (gameInventory.searchInventory("Machete")) {
+                        dialog.dismiss();
 
-            Button northPath = (Button) findViewById(R.id.north);
-            buttonLayout.removeView(northPath);
+                        Intent intent = new Intent(getBaseContext(), TheNorth.class);
+                        intent.putExtra("Inventory", gameInventory);
+                        startActivity(intent);
+                    } else {
+                        dialogBox.setText("The path is blocked by a small patch of roses.");
+                    }
+                }
+            });
+            alert.setPositiveButton("South", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+
+                    Intent intent = new Intent(getBaseContext(), TheSouth.class);
+                    intent.putExtra("Inventory", gameInventory);
+                    startActivity(intent);
+                }
+            });
+            alert.show();
         }
-    }
-
-    public void toTheSouth(View v)
-    {
-        Intent intent = new Intent(this, TheSouth.class);
-        startActivity(intent);
     }
 
     public void doBindService(){

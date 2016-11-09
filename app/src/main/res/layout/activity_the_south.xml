@@ -50,23 +50,6 @@
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:id="@+id/buttonLayout">
-                <Button
-                    android:id="@+id/north"
-                    android:background="@drawable/transparent_button"
-                    android:layout_width="145dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:text="BTN 1"
-                    />
-
-                <Button
-                    android:id="@+id/south"
-                    android:background="@drawable/transparent_button"
-                    android:layout_width="145dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:text="BTN 2"
-                    />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

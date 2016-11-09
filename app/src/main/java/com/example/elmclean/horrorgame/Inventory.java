@@ -2,13 +2,14 @@ package com.example.elmclean.horrorgame;
 
 import android.content.ClipData;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * Created by elmclean on 10/19/2016.
  */
-public class Inventory {
+public class Inventory implements Serializable {
     ArrayList<String> inventory = new ArrayList<String>();
 
     public String getItemList() {
