@@ -27,16 +27,32 @@ public class TheSouth extends AppCompatActivity {
         message.add("Viola looks around and finds the exit is also blocked by a startlingly huge patch of roses.");
         message.add("There is a small path that leads through the woods to the left. Viola walks carefully through the foliage and finds an axe lodged in a tree.");
 
+        showDialog();
+    }
+
+    public void showDialog() {
         TextView dialogBox = (TextView) findViewById(R.id.storyText);
         dialogBox.setText(message.get(messageIndex));
+        messageIndex = messageIndex + 1;
     }
 
     public void nextDialog(View v) {
-        messageIndex = messageIndex + 1;
         final TextView dialogBox = (TextView) findViewById(R.id.storyText);
 
         if(messageIndex < message.size()) {
-            dialogBox.setText(message.get(messageIndex));
+            showDialog();
+        } if(gameInventory.searchInventory("Machete")){
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setMessage("Which direction would you like to go?");
+
+            alert.setPositiveButton("North", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+
+                    dialog.dismiss();
+                }
+            });
+            alert.show();
+
         } else {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setMessage("Would you like to pick up the axe?");

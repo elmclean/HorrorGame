@@ -23,7 +23,6 @@ public class StartGame extends AppCompatActivity {
     public int messageIndex = 0;
     public int choiceIndex = 0;
     List<String> message = new ArrayList<String>();
-    public final TextView dialogBox = (TextView) findViewById(R.id.storyText);
 
     private boolean mIsBound = false;
     private MusicService mServ;
@@ -42,25 +41,31 @@ public class StartGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_game);
 
-        gameInventory.addItem("Letter");
-        message.add("Viola finds herself in the middle of a forest. Looking around she sees a small cat sitting on a tree stump. A rotten log sits to her left, full of bugs and moss.");
+        if(!gameInventory.searchInventory("Letter")) {
+            gameInventory.addItem("Letter");
+            message.add("Viola finds herself in the middle of a forest. Looking around she sees a small cat sitting on a tree stump. A rotten log sits to her left, full of bugs and moss.");
 
-        doBindService();
+            doBindService();
 
-        Intent music = new Intent();
-        music.setClass(this, MusicService.class);
-        music.putExtra("MUSIC_NAME", "warehouse");
-        startService(music);
+            Intent music = new Intent();
+            music.setClass(this, MusicService.class);
+            music.putExtra("MUSIC_NAME", "warehouse");
+            startService(music);
 
-        showDialog();
+            showDialog();
+        } else if(gameInventory.searchInventory("Machete")){
+            // already loaded page once, go north
+        }
     }
 
     public void showDialog() {
+        TextView dialogBox = (TextView) findViewById(R.id.storyText);
         dialogBox.setText(message.get(messageIndex));
         messageIndex = messageIndex + 1;
     }
 
     public void nextDialog(View v) {
+        final TextView dialogBox = (TextView) findViewById(R.id.storyText);
 
         if(messageIndex < message.size()) {
             showDialog();
