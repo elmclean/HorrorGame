@@ -10,19 +10,16 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StartGame extends AppCompatActivity {
-
-    public Inventory gameInventory = new Inventory();
+public class CutRoses extends AppCompatActivity {
     public int messageIndex = 0;
-    public int choiceIndex = 0;
     List<String> message = new ArrayList<String>();
+    Inventory gameInventory;
+    Boolean cutRoses = false;
 
     private boolean mIsBound = false;
     private MusicService mServ;
@@ -39,17 +36,12 @@ public class StartGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start_game);
+        setContentView(R.layout.activity_cut_roses);
 
-        gameInventory.addItem("Letter");
-        message.add("Viola finds herself in the middle of a forest. Looking around she sees a small cat sitting on a tree stump. A rotten log sits to her left, full of bugs and moss.");
+        Intent i = getIntent();
+        gameInventory = (Inventory)i.getSerializableExtra("Inventory");
 
-        doBindService();
-
-        Intent music = new Intent();
-        music.setClass(this, MusicService.class);
-        music.putExtra("MUSIC_NAME", "warehouse");
-        startService(music);
+        message.add("The path is blocked by a small patch of roses.");
 
         showDialog();
     }
@@ -63,35 +55,36 @@ public class StartGame extends AppCompatActivity {
     public void nextDialog(View v) {
         final TextView dialogBox = (TextView) findViewById(R.id.storyText);
 
-        if(messageIndex < message.size()) {
+        if (messageIndex < message.size()) {
             showDialog();
         } else {
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setMessage("Which path do you want to take?");
+            if (!cutRoses) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert.setMessage("Cut the roses?");
 
-            alert.setNegativeButton("North", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    if (gameInventory.searchInventory("Machete")) {
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        message.add("Viola uses the machete to chop through the roses.");
+                        cutRoses = true;
+                        showDialog();
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+            } else {
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert.setMessage("Would you like to continue north?");
+
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
 
                         Intent intent = new Intent(getBaseContext(), TheNorth.class);
-                        intent.putExtra("Inventory", gameInventory);
                         startActivity(intent);
-                    } else {
-                        dialogBox.setText("The path is blocked by a small patch of roses.");
                     }
-                }
-            });
-            alert.setPositiveButton("South", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
-
-                    Intent intent = new Intent(getBaseContext(), TheSouth.class);
-                    intent.putExtra("Inventory", gameInventory);
-                    startActivity(intent);
-                }
-            });
-            alert.show();
+                });
+                alert.show();
+            }
         }
     }
 

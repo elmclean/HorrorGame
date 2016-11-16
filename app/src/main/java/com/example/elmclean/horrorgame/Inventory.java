@@ -17,7 +17,7 @@ public class Inventory implements Serializable {
     }
 
     public void addItem(String item) {
-        inventory.add("item");
+        inventory.add(item);
     }
 
     public Boolean searchInventory(String item) {

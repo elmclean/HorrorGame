@@ -41,34 +41,36 @@ public class TheSouth extends AppCompatActivity {
 
         if(messageIndex < message.size()) {
             showDialog();
-        } if(gameInventory.searchInventory("Machete")){
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setMessage("Which direction would you like to go?");
-
-            alert.setPositiveButton("North", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-
-                    dialog.dismiss();
-                }
-            });
-            alert.show();
-
         } else {
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setMessage("Would you like to pick up the axe?");
+            if(gameInventory.searchInventory("Machete")){
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert.setMessage("Which direction would you like to go?");
 
-            alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
-                }
-            });
-            alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    gameInventory.addItem("Machete");
-                    dialog.dismiss();
-                }
-            });
-            alert.show();
+                alert.setPositiveButton("North", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+
+                        Intent intent = new Intent(getBaseContext(), CutRoses.class);
+                        intent.putExtra("Inventory", gameInventory);
+                        startActivity(intent);
+                    }
+                });
+                alert.show();
+
+            } else {
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert.setMessage("Would you like to pick up the axe?");
+
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        gameInventory.addItem("Machete");
+                        message.add("Viola picked up the axe, this looks like it could cut through those roses.");
+                        showDialog();
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+            }
         }
     }
 }

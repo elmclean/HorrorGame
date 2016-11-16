@@ -22,7 +22,8 @@
             android:name=".MusicService"
             android:enabled="true" />
 
-        <activity android:name=".TheSouth"></activity>
+        <activity android:name=".TheSouth" />
+        <activity android:name=".CutRoses"></activity>
     </application>
 
 </manifest>

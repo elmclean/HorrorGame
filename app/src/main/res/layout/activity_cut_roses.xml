@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.elmclean.horrorgame.StartGame">
+
+    <ImageView
+        android:id="@+id/backgroundLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/start_game"
+        android:scaleType="centerCrop">
+    </ImageView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:id="@+id/textLayout"
+        android:layout_gravity="bottom" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:id="@+id/dialogLayout">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:text=""
+                android:textSize="16sp"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:id="@+id/storyText"
+                android:layout_gravity="center_horizontal|bottom"
+                android:onClick="nextDialog"
+                android:clickable="true"
+                android:background="@drawable/dialog_box"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:id="@+id/buttonLayout">
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
