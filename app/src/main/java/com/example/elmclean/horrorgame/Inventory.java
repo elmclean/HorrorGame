@@ -27,4 +27,13 @@ public class Inventory implements Serializable {
             return false;
         }
     }
+    public ArrayList<String> getList() {
+        int size = inventory.size();
+        ArrayList<String> inventoryList = new ArrayList<String>();
+        for(int i = 0; i < size; i++) {
+            inventoryList.add(inventory.get(i));
+        }
+
+        return inventoryList;
+    }
 }

@@ -6,24 +6,35 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StartGame extends AppCompatActivity {
-
+    // for game mechanics
     public Inventory gameInventory = new Inventory();
     public int messageIndex = 0;
     public int choiceIndex = 0;
     List<String> message = new ArrayList<String>();
 
+    // for hamburger menu
+    private ListView mDrawerList;
+    private ArrayAdapter<String> mAdapter;
+
+    // for music
     private boolean mIsBound = false;
     private MusicService mServ;
     private ServiceConnection Scon = new ServiceConnection(){
@@ -44,6 +55,7 @@ public class StartGame extends AppCompatActivity {
         gameInventory.addItem("Letter");
         message.add("Viola finds herself in the middle of a forest. Looking around she sees a small cat sitting on a tree stump. A rotten log sits to her left, full of bugs and moss.");
 
+        // create music
         doBindService();
 
         Intent music = new Intent();
@@ -51,7 +63,33 @@ public class StartGame extends AppCompatActivity {
         music.putExtra("MUSIC_NAME", "warehouse");
         startService(music);
 
+        // start dialog box
         showDialog();
+
+        // create inventory menu
+        mDrawerList = (ListView)findViewById(R.id.inventory_drawer);
+        addDrawerItems();
+
+        DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+
+        //Create the actionbar drawer toggle
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.app_name) {
+            //called when a drawer has settled in a closed state
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                invalidateOptionsMenu();
+            }
+            //called when a drawer is settled in an open state
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu();
+            }
+        };
+        drawerLayout.setDrawerListener(drawerToggle);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
     }
 
     public void showDialog() {
@@ -108,5 +146,12 @@ public class StartGame extends AppCompatActivity {
             unbindService(Scon);
             mIsBound = false;
         }
+    }
+
+    private void addDrawerItems() {
+        List<String> inventoryArray = gameInventory.getList();
+
+        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, inventoryArray);
+        mDrawerList.setAdapter(mAdapter);
     }
 }
