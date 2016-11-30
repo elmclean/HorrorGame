@@ -15,8 +15,7 @@
     <string name="the_south">Viola looks around and finds the way is blocked by a startlingly huge patch of roses.\n\n
     There is a small path that leads through the woods to the left. Viola walks carefully through the foliage and
     finds an axe lodged in a tree.</string>
-    <string-array
-        name="inventory_array">
-        <item>Letter</item>
-    </string-array>
+
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
 </resources>
