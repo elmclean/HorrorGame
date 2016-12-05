@@ -52,7 +52,7 @@ public class TheNorth extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.dismiss();
 
-                    Intent intent = new Intent(getBaseContext(), CutRoses.class);
+                    Intent intent = new Intent(getBaseContext(), House1.class);
                     intent.putExtra("Inventory", gameInventory);
                     startActivity(intent);
                 }

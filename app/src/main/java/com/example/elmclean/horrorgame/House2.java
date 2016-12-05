@@ -24,7 +24,8 @@ public class House2 extends AppCompatActivity {
         Intent i = getIntent();
         gameInventory = (Inventory)i.getSerializableExtra("Inventory");
 
-        message.add("House Room 2");
+        message.add("This room is dark, a dark puddle of unidentifiable liquid lies in the middle of the room.");
+        message.add("Across the room Viola can see a note hanging from the stone wall.");
         showDialog();
     }
 
@@ -43,9 +44,11 @@ public class House2 extends AppCompatActivity {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setMessage("What would you like to inspect?");
 
-            alert.setNegativeButton("Blood", new DialogInterface.OnClickListener() {
+            alert.setNegativeButton("Puddle", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.dismiss();
+                    message.add("Thank you for playing this small demo game.");
+                    showDialog();
 //                    Intent intent = new Intent(getBaseContext(), TheNorth.class);
 //                    intent.putExtra("Inventory", gameInventory);
 //                    startActivity(intent);
@@ -54,7 +57,8 @@ public class House2 extends AppCompatActivity {
             alert.setPositiveButton("Note", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.dismiss();
-
+                    message.add("Game Over. You died");
+                    showDialog();
 //                    Intent intent = new Intent(getBaseContext(), House2.class);
 //                    intent.putExtra("Inventory", gameInventory);
 //                    startActivity(intent);

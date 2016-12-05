@@ -69,7 +69,7 @@ public class CutRoses extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
 
-                        Intent intent = new Intent(getBaseContext(), House1.class);
+                        Intent intent = new Intent(getBaseContext(), TheNorth.class);
                         startActivity(intent);
                     }
                 });

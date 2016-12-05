@@ -10,7 +10,7 @@
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/screen_title_vertical"
+        android:src="@drawable/house_1"
         android:scaleType="centerCrop">
     </ImageView>
 
