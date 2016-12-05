@@ -31,14 +31,6 @@ public class StartGame extends AppCompatActivity {
     public int choiceIndex = 0;
     List<String> message = new ArrayList<String>();
 
-    // for hamburger menu
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-    private ArrayAdapter<String> mAdapter;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private CharSequence mDrawerTitle;
-    private CharSequence mTitle;
-
     // for music
     private boolean mIsBound = false;
     private MusicService mServ;
@@ -56,10 +48,6 @@ public class StartGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_game);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
 
         gameInventory.addItem("Letter");
         message.add("Viola finds herself in the middle of a forest. Looking around she sees a small cat sitting on a tree stump. A rotten log sits to her left, full of bugs and moss.");
@@ -74,29 +62,6 @@ public class StartGame extends AppCompatActivity {
 
         // start dialog box
         showDialog();
-
-        // create inventory menu
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView)findViewById(R.id.inventory_drawer);
-        addDrawerItems();
-
-
-        mTitle = mDrawerTitle = getTitle();
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        //Create the actionbar drawer toggle
-//        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.app_name, R.string.app_name) {
-//            //called when a drawer has settled in a closed state
-//            public void onDrawerClosed(View view) {
-//                super.onDrawerClosed(view);
-//                invalidateOptionsMenu();
-//            }
-//            //called when a drawer is settled in an open state
-//            public void onDrawerOpened(View drawerView) {
-//                super.onDrawerOpened(drawerView);
-//                invalidateOptionsMenu();
-//            }
-//        };
     }
 
     public void showDialog() {
@@ -153,12 +118,5 @@ public class StartGame extends AppCompatActivity {
             unbindService(Scon);
             mIsBound = false;
         }
-    }
-
-    private void addDrawerItems() {
-        List<String> inventoryArray = gameInventory.getList();
-
-        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, inventoryArray);
-        mDrawerList.setAdapter(mAdapter);
     }
 }

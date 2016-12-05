@@ -23,7 +23,9 @@
             android:enabled="true" />
 
         <activity android:name=".TheSouth" />
-        <activity android:name=".CutRoses"></activity>
+        <activity android:name=".CutRoses" />
+        <activity android:name=".House1" />
+        <activity android:name=".House2"></activity>
     </application>
 
 </manifest>

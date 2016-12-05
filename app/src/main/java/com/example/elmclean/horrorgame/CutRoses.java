@@ -21,18 +21,6 @@ public class CutRoses extends AppCompatActivity {
     Inventory gameInventory;
     Boolean cutRoses = false;
 
-    private boolean mIsBound = false;
-    private MusicService mServ;
-    private ServiceConnection Scon = new ServiceConnection(){
-        public void onServiceConnected(ComponentName name, IBinder
-                binder) {
-            mServ = ((MusicService.ServiceBinder)binder).getService();
-        }
-        public void onServiceDisconnected(ComponentName name) {
-            mServ = null;
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +53,8 @@ public class CutRoses extends AppCompatActivity {
                 alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         message.add("Viola uses the machete to chop through the roses.");
+                        message.add("The machete broke.");
+                        message.add("The way is clear.");
                         cutRoses = true;
                         showDialog();
                         dialog.dismiss();
@@ -79,27 +69,12 @@ public class CutRoses extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
 
-                        Intent intent = new Intent(getBaseContext(), TheNorth.class);
+                        Intent intent = new Intent(getBaseContext(), House1.class);
                         startActivity(intent);
                     }
                 });
                 alert.show();
             }
-        }
-    }
-
-    public void doBindService(){
-        bindService(new Intent(this,MusicService.class),
-                Scon, Context.BIND_AUTO_CREATE);
-        mIsBound = true;
-    }
-
-    public void doUnbindService()
-    {
-        if(mIsBound)
-        {
-            unbindService(Scon);
-            mIsBound = false;
         }
     }
 }
