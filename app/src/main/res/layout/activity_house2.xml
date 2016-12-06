@@ -4,13 +4,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.elmclean.horrorgame.StartGame">
+    tools:context="com.example.elmclean.horrorgame.House2">
 
     <ImageView
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/house_2"
+        android:src="@drawable/house_2_alt"
         android:scaleType="centerCrop">
     </ImageView>
 

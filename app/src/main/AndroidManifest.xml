@@ -25,7 +25,8 @@
         <activity android:name=".TheSouth" />
         <activity android:name=".CutRoses" />
         <activity android:name=".House1" />
-        <activity android:name=".House2"></activity>
+        <activity android:name=".House2" />
+        <activity android:name=".GameOver"></activity>
     </application>
 
 </manifest>

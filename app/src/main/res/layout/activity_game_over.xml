@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.elmclean.horrorgame.GameOver">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/game_over"
+        android:scaleType="centerCrop">
+    </ImageView>
+
+    <Button
+        android:id="@+id/resume"
+        android:background="@drawable/transparent_button"
+        android:layout_width="145dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:text="Try Again"
+        android:onClick="startGame"/>
+
+    <Button
+        android:id="@+id/new_game"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:background="@drawable/transparent_button"
+        android:layout_width="145dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:text="Start New Game"
+        android:onClick="resume"/>
+</FrameLayout>

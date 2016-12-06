@@ -10,7 +10,7 @@
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/the_north"
+        android:src="@drawable/the_north_house"
         android:scaleType="centerCrop">
     </ImageView>
 

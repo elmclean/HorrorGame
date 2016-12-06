@@ -8,9 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/screen_title_vertical"
+    android:background="@drawable/splash_2"
     tools:context="com.example.elmclean.horrorgame.MainActivity">
-
 
     <TextView
         android:paddingTop="96dp"
