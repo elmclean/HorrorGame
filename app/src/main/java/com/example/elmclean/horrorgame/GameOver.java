@@ -54,7 +54,9 @@ public class GameOver extends AppCompatActivity {
     }
 
     public void resume() {
-        // TODO start over at house 1
+        // start over at house 1
+
+        // not done yet
     }
 
     public void doBindService(){
