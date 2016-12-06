@@ -19,19 +19,19 @@
         android:background="@drawable/transparent_button"
         android:layout_width="145dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="130dp"
         android:layout_marginBottom="80dp"
-        android:layout_gravity="center_horizontal|bottom"
+        android:layout_gravity="center_horizontal|center"
         android:text="Try Again"
-        android:onClick="startGame"/>
+        android:onClick="resume"/>
 
     <Button
         android:id="@+id/new_game"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginTop="110dp"
         android:background="@drawable/transparent_button"
         android:layout_width="145dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|bottom"
+        android:layout_gravity="center_horizontal|center"
         android:text="Start New Game"
-        android:onClick="resume"/>
+        android:onClick="startGame"/>
 </FrameLayout>

@@ -53,9 +53,9 @@ public class GameOver extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void resume() {
+    public void resume(View v) {
         // start over at house 1
-
+        // changing so i can commit and push
         // not done yet
     }
 
