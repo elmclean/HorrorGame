@@ -65,6 +65,8 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
             mPlayer = MediaPlayer.create(this, R.raw.warehouse);
         } else if(songName.equals("walls")) {
             mPlayer = MediaPlayer.create(this, R.raw.walls);
+        } else if(songName.equals("bone_crush")) {
+            mPlayer = MediaPlayer.create(this, R.raw.bone_crush);
         }
 
         mPlayer.setOnErrorListener(this);

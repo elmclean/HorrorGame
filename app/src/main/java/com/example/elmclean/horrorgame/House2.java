@@ -136,6 +136,9 @@ public class House2 extends AppCompatActivity {
                     step = step + 1;
                 } else if(step == 3) {
                     background.setImageResource(R.drawable.wall_4);
+                    doUnbindService();
+
+                    deathSound();
                 }
             }
 
@@ -147,6 +150,14 @@ public class House2 extends AppCompatActivity {
                 startActivity(intent);
             }
         }.start();
+    }
+
+    public void deathSound() {
+        doBindService();
+        Intent music = new Intent();
+        music.setClass(this, MusicService.class);
+        music.putExtra("MUSIC_NAME", "bone_crush");
+        startService(music);
     }
 
     public void doBindService(){
