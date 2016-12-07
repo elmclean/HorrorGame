@@ -68,8 +68,8 @@ public class House2 extends AppCompatActivity {
         if (messageIndex < message.size()) {
             showDialog();
         } else if(complete) {
-            message.add("The Witch's House Demo ~ Fin");
-            showDialog();
+            Intent intent = new Intent(this, EndGame.class);
+            startActivity(intent);
         } else if (note) {  // safe to look at the note now
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setMessage("What would you like to inspect?");
