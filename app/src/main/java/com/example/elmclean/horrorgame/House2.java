@@ -1,11 +1,14 @@
 package com.example.elmclean.horrorgame;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
+import android.os.IBinder;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +26,19 @@ public class House2 extends AppCompatActivity {
     Inventory gameInventory;
     Boolean note = false;
     Boolean complete = false;
+
+    // for music
+    private boolean mIsBound = false;
+    private MusicService mServ;
+    private ServiceConnection Scon = new ServiceConnection(){
+        public void onServiceConnected(ComponentName name, IBinder
+                binder) {
+            mServ = ((MusicService.ServiceBinder)binder).getService();
+        }
+        public void onServiceDisconnected(ComponentName name) {
+            mServ = null;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +114,12 @@ public class House2 extends AppCompatActivity {
     public void gameOver() {
         final ImageView background = (ImageView) findViewById(R.id.background);
 
+        doBindService();
+        Intent music = new Intent();
+        music.setClass(this, MusicService.class);
+        music.putExtra("MUSIC_NAME", "walls");
+        startService(music);
+
         new CountDownTimer(5000, 1000){
             int step = 0;
 
@@ -125,5 +147,20 @@ public class House2 extends AppCompatActivity {
                 startActivity(intent);
             }
         }.start();
+    }
+
+    public void doBindService(){
+        bindService(new Intent(this,MusicService.class),
+                Scon, Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    public void doUnbindService()
+    {
+        if(mIsBound)
+        {
+            unbindService(Scon);
+            mIsBound = false;
+        }
     }
 }

@@ -47,11 +47,12 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
         songName = extras.getString("MUSIC_NAME");
 
         if(mPlayer != null) {
-            if(mPlayer.isPlaying()) {
+            if(mPlayer.isPlaying()) {  // stop the music already playing
                 stopMusic();
             }
         }
 
+        // select the song to play
         if(songName.equals("lost_chair")) {
             mPlayer = MediaPlayer.create(this, R.raw.lost_chair);
         } else if(songName.equals("rumor")){
@@ -62,7 +63,10 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
             mPlayer = MediaPlayer.create(this, R.raw.undermine);
         } else if(songName.equals("warehouse")) {
             mPlayer = MediaPlayer.create(this, R.raw.warehouse);
+        } else if(songName.equals("walls")) {
+            mPlayer = MediaPlayer.create(this, R.raw.walls);
         }
+
         mPlayer.setOnErrorListener(this);
 
         if (mPlayer != null) {
@@ -78,7 +82,7 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
             }
         });
 
-        mPlayer.start();
+        mPlayer.start();  // start the music
         return START_STICKY;
     }
 
