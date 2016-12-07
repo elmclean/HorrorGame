@@ -42,7 +42,7 @@ public class CutRoses extends AppCompatActivity {
         Intent i = getIntent();
         gameInventory = (Inventory)i.getSerializableExtra("Inventory");
 
-        message.add("The path is blocked by a small patch of roses.");
+        message.add("The path north is blocked by a small patch of roses.");
 
         showDialog();
     }
@@ -65,8 +65,9 @@ public class CutRoses extends AppCompatActivity {
 
                 alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        message.add("Viola uses the machete to chop through the roses.");
-                        message.add("The machete broke.");
+                        message.add("Viola\n\"It's working!\"");
+                        message.add("Viola\n\"...Oh no.\"");
+                        message.add("The roses have been cleared away, but the machete broke in the process.");
                         message.add("The way is clear.");
                         cutRoses = true;
                         showDialog();

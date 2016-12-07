@@ -50,24 +50,30 @@ public class StartGame extends AppCompatActivity {
         setContentView(R.layout.activity_start_game);
 
         gameInventory.addItem("Letter");
-        message.add("Viola finds herself in the middle of a forest. Looking around she sees a small cat sitting on a tree stump. A rotten log sits to her left, full of bugs and moss.");
 
-        // create music
+        message.add("You find yourself in the middle of a forest. Looking around you see a small black cat sitting on a tree stump. A rotten log sits to your left, full of bugs and moss.");
+        message.add("Black Cat\n\"You're up huh?\"");
+        message.add("Viola\n\"I'm in a...forest?\"");
+        message.add("You start to rummage through your pockets.");
+        message.add("Viola\n\"There's a letter from dad.\"");
+        message.add("Dad\n\"I don't mind if you go to her house, but just stay away from the forest. Hope to see you soon.\"");
+        message.add("You walk up to read the sign post in the center of the clearing.\nNorth: ....'s House\nSouth: Out of the forest");
 
+        // create music as a new intent/server
         doBindService();
-
         Intent music = new Intent();
         music.setClass(this, MusicService.class);
         music.putExtra("MUSIC_NAME", "rumor");
         startService(music);
 
-        // start dialog box
+        // display text in dialog box
         showDialog();
     }
 
+    // change the text in the dialog box at every click
     public void showDialog() {
         TextView dialogBox = (TextView) findViewById(R.id.storyText);
-        dialogBox.setText(message.get(messageIndex));
+        dialogBox.setText(message.get(messageIndex));  // change text
         messageIndex = messageIndex + 1;
     }
 
@@ -75,11 +81,14 @@ public class StartGame extends AppCompatActivity {
         final TextView dialogBox = (TextView) findViewById(R.id.storyText);
 
         if(messageIndex < message.size()) {
-            showDialog();
-        } else {
+            showDialog();  // display new text
+        } else {  // no dialog text to put on the screen
+
+            // build an alert to see what the player would like to do next
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setMessage("Which path do you want to take?");
 
+            // right button
             alert.setNegativeButton("North", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     if (gameInventory.searchInventory("Machete")) {
@@ -93,12 +102,14 @@ public class StartGame extends AppCompatActivity {
                     }
                 }
             });
+            // left button
             alert.setPositiveButton("South", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.dismiss();
 
-                    doUnbindService();
+                    doUnbindService();  // stop music
 
+                    // go to next screen
                     Intent intent = new Intent(getBaseContext(), TheSouth.class);
                     intent.putExtra("Inventory", gameInventory);
                     startActivity(intent);
@@ -108,12 +119,15 @@ public class StartGame extends AppCompatActivity {
         }
     }
 
+    // bind the music to this activity
     public void doBindService(){
         bindService(new Intent(this,MusicService.class),
                 Scon, Context.BIND_AUTO_CREATE);
         mIsBound = true;
     }
 
+
+    // unbind the music from this activity
     public void doUnbindService()
     {
         if(mIsBound)

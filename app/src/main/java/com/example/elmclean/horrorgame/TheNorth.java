@@ -19,6 +19,20 @@ public class TheNorth extends AppCompatActivity {
     public int messageIndex = 0;
     List<String> message = new ArrayList<String>();
     Inventory gameInventory;
+    Boolean resume = false;
+
+    // for music
+    private boolean mIsBound = false;
+    private MusicService mServ;
+    private ServiceConnection Scon = new ServiceConnection(){
+        public void onServiceConnected(ComponentName name, IBinder
+                binder) {
+            mServ = ((MusicService.ServiceBinder)binder).getService();
+        }
+        public void onServiceDisconnected(ComponentName name) {
+            mServ = null;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +40,24 @@ public class TheNorth extends AppCompatActivity {
         setContentView(R.layout.activity_the_north);
 
         Intent i = getIntent();
+        Bundle extras = i.getExtras();
         gameInventory = (Inventory)i.getSerializableExtra("Inventory");
-        message.add("Black Cat:\n\"Hmm...So the way out is blocked by roses.\"");
-        message.add("Black Cat:\n\"You gonna go in?\"");
-        message.add("Black Cat:\n\"Might as well if you can't leave.\"");
+
+        if(extras.containsKey("Resume")) {
+            resume = (Boolean)i.getSerializableExtra("Resume");
+        }
+
+        if(resume) {
+            // create music
+            doBindService();
+            Intent music = new Intent();
+            music.setClass(this, MusicService.class);
+            music.putExtra("MUSIC_NAME", "rumor");
+            startService(music);
+        }
+        message.add("Black Cat\n\"Hmm...So the way out is blocked by roses.\"");
+        message.add("Black Cat\n\"You gonna go in?\"");
+        message.add("Black Cat\n\"Might as well if you can't leave.\"");
 
         showDialog();
     }
@@ -58,6 +86,21 @@ public class TheNorth extends AppCompatActivity {
                 }
             });
             alert.show();
+        }
+    }
+
+    public void doBindService(){
+        bindService(new Intent(this,MusicService.class),
+                Scon, Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    public void doUnbindService()
+    {
+        if(mIsBound)
+        {
+            unbindService(Scon);
+            mIsBound = false;
         }
     }
 }

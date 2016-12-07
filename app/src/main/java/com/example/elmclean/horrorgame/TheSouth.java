@@ -24,8 +24,10 @@ public class TheSouth extends AppCompatActivity {
         Intent i = getIntent();
         gameInventory = (Inventory)i.getSerializableExtra("Inventory");
 
-        message.add("Viola looks around and finds the exit is also blocked by a startlingly huge patch of roses.");
-        message.add("There is a small path that leads through the woods to the left. Viola walks carefully through the foliage and finds an axe lodged in a tree.");
+        message.add("As you try to continue south you find the exit is also blocked by an impassable patch of rose bushes.");
+        message.add("You only spot one small path to the side that you could fit through.");
+        message.add("You follow this spall path through the foliage to a large tree. You see that there is a machete lodged in the bark of the tree.");
+        message.add("Viola\n\"This doesn't look like it could cut the roses to the south, but I might be able to cut through the small patch in the north.\"");
 
         showDialog();
     }
@@ -59,12 +61,12 @@ public class TheSouth extends AppCompatActivity {
 
             } else {
                 AlertDialog.Builder alert = new AlertDialog.Builder(this);
-                alert.setMessage("Would you like to pick up the axe?");
+                alert.setMessage("Would you like to pick up the machete?");
 
                 alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         gameInventory.addItem("Machete");
-                        message.add("Viola picked up the axe, this looks like it could cut through those roses.");
+                        message.add("You pick up the machete.");
                         showDialog();
                         dialog.dismiss();
                     }

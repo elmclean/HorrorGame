@@ -63,6 +63,7 @@ public class GameOver extends AppCompatActivity {
         stopService(new Intent(GameOver.this,MusicService.class));
         Intent intent = new Intent(this, TheNorth.class);
         intent.putExtra("Inventory", gameInventory);
+        intent.putExtra("Resume", true);
         startActivity(intent);
     }
 

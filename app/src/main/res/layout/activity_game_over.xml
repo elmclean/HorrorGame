@@ -19,7 +19,7 @@
         android:background="@drawable/transparent_button"
         android:layout_width="145dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="170dp"
         android:layout_marginBottom="80dp"
         android:layout_gravity="center_horizontal|center"
         android:text="Try Again"
@@ -27,7 +27,7 @@
 
     <Button
         android:id="@+id/new_game"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="150dp"
         android:background="@drawable/transparent_button"
         android:layout_width="145dp"
         android:layout_height="wrap_content"
