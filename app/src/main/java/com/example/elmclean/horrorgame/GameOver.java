@@ -12,7 +12,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameOver extends AppCompatActivity {
+    Inventory gameInventory;
 
     private boolean mIsBound = false;
     private MusicService mServ;
@@ -40,7 +44,7 @@ public class GameOver extends AppCompatActivity {
 
         Intent music = new Intent();
         music.setClass(this, MusicService.class);
-        music.putExtra("MUSIC_NAME", "lost_chair");
+        music.putExtra("MUSIC_NAME", "miller_house");
         startService(music);
     }
 
@@ -54,9 +58,12 @@ public class GameOver extends AppCompatActivity {
     }
 
     public void resume(View v) {
-        // start over at house 1
-        // changing so i can commit and push
-        // not done yet
+        doUnbindService();
+
+        stopService(new Intent(GameOver.this,MusicService.class));
+        Intent intent = new Intent(this, TheNorth.class);
+        intent.putExtra("Inventory", gameInventory);
+        startActivity(intent);
     }
 
     public void doBindService(){

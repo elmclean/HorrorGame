@@ -2,10 +2,12 @@ package com.example.elmclean.horrorgame;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ public class House2 extends AppCompatActivity {
 
     public void nextDialog(View v) {
         final TextView dialogBox = (TextView) findViewById(R.id.storyText);
+        final ImageView background = (ImageView) findViewById(R.id.background);
 
         if(messageIndex < message.size()) {
             showDialog();
@@ -49,19 +52,28 @@ public class House2 extends AppCompatActivity {
                     dialog.dismiss();
                     message.add("Thank you for playing this small demo game.");
                     showDialog();
-//                    Intent intent = new Intent(getBaseContext(), TheNorth.class);
-//                    intent.putExtra("Inventory", gameInventory);
-//                    startActivity(intent);
                 }
             });
             alert.setPositiveButton("Note", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.dismiss();
-                    message.add("Game Over. You died");
-                    showDialog();
-//                    Intent intent = new Intent(getBaseContext(), House2.class);
-//                    intent.putExtra("Inventory", gameInventory);
-//                    startActivity(intent);
+
+                    new CountDownTimer(5000,1000){
+
+                        @Override
+                        public void onTick(long miliseconds){}
+
+                        @Override
+                        public void onFinish(){
+                            //after 5 seconds draw the second line
+                            dialogBox.setVisibility(View.GONE);
+                            background.setBackgroundResource(R.drawable.the_north_house);
+
+                            Intent intent = new Intent(getBaseContext(), GameOver.class);
+                            intent.putExtra("Inventory", gameInventory);
+                            startActivity(intent);
+                        }
+                    }.start();
                 }
             });
             alert.show();

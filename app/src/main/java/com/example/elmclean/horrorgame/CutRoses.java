@@ -21,6 +21,19 @@ public class CutRoses extends AppCompatActivity {
     Inventory gameInventory;
     Boolean cutRoses = false;
 
+    // for music
+    private boolean mIsBound = false;
+    private MusicService mServ;
+    private ServiceConnection Scon = new ServiceConnection(){
+        public void onServiceConnected(ComponentName name, IBinder
+                binder) {
+            mServ = ((MusicService.ServiceBinder)binder).getService();
+        }
+        public void onServiceDisconnected(ComponentName name) {
+            mServ = null;
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +83,7 @@ public class CutRoses extends AppCompatActivity {
                         dialog.dismiss();
 
                         Intent intent = new Intent(getBaseContext(), TheNorth.class);
+                        intent.putExtra("Inventory", gameInventory);
                         startActivity(intent);
                     }
                 });

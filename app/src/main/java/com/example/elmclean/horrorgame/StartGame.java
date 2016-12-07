@@ -53,11 +53,12 @@ public class StartGame extends AppCompatActivity {
         message.add("Viola finds herself in the middle of a forest. Looking around she sees a small cat sitting on a tree stump. A rotten log sits to her left, full of bugs and moss.");
 
         // create music
+
         doBindService();
 
         Intent music = new Intent();
         music.setClass(this, MusicService.class);
-        music.putExtra("MUSIC_NAME", "warehouse");
+        music.putExtra("MUSIC_NAME", "rumor");
         startService(music);
 
         // start dialog box
@@ -95,6 +96,8 @@ public class StartGame extends AppCompatActivity {
             alert.setPositiveButton("South", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.dismiss();
+
+                    doUnbindService();
 
                     Intent intent = new Intent(getBaseContext(), TheSouth.class);
                     intent.putExtra("Inventory", gameInventory);

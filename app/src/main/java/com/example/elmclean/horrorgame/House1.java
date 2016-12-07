@@ -1,7 +1,11 @@
 package com.example.elmclean.horrorgame;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,10 +20,31 @@ public class House1 extends AppCompatActivity {
     List<String> message = new ArrayList<String>();
     Inventory gameInventory;
 
+    // for music
+    private boolean mIsBound = false;
+    private MusicService mServ;
+    private ServiceConnection Scon = new ServiceConnection(){
+        public void onServiceConnected(ComponentName name, IBinder
+                binder) {
+            mServ = ((MusicService.ServiceBinder)binder).getService();
+        }
+        public void onServiceDisconnected(ComponentName name) {
+            mServ = null;
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_house1);
+
+        // create music
+        doBindService();
+
+        Intent music = new Intent();
+        music.setClass(this, MusicService.class);
+        music.putExtra("MUSIC_NAME", "warehouse");
+        startService(music);
 
         Intent i = getIntent();
         gameInventory = (Inventory)i.getSerializableExtra("Inventory");
@@ -54,6 +79,21 @@ public class House1 extends AppCompatActivity {
                 }
             });
             alert.show();
+        }
+    }
+
+    public void doBindService(){
+        bindService(new Intent(this,MusicService.class),
+                Scon, Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    public void doUnbindService()
+    {
+        if(mIsBound)
+        {
+            unbindService(Scon);
+            mIsBound = false;
         }
     }
 }

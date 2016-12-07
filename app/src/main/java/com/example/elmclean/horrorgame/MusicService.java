@@ -14,9 +14,9 @@ import android.os.IBinder;
 import android.widget.Toast;
 
 public class MusicService extends Service implements MediaPlayer.OnErrorListener {
-
+    public static final String TAG = "MusicTag";
     private final IBinder mBinder = new ServiceBinder();
-    MediaPlayer mPlayer;
+    MediaPlayer mPlayer = null;
     private int length = 0;
     public static final String MUSIC_NAME = "MUSIC_NAME";
     public String songName = "";
@@ -46,9 +46,21 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
         Bundle extras = intent.getExtras();
         songName = extras.getString("MUSIC_NAME");
 
+        if(mPlayer != null) {
+            if(mPlayer.isPlaying()) {
+                stopMusic();
+            }
+        }
+
         if(songName.equals("lost_chair")) {
             mPlayer = MediaPlayer.create(this, R.raw.lost_chair);
-        } else {
+        } else if(songName.equals("rumor")){
+            mPlayer = MediaPlayer.create(this, R.raw.rumor);
+        } else if(songName.equals("miller_house")) {
+            mPlayer = MediaPlayer.create(this, R.raw.miller_house);
+        } else if(songName.equals("undermine")) {
+            mPlayer = MediaPlayer.create(this, R.raw.undermine);
+        } else if(songName.equals("warehouse")) {
             mPlayer = MediaPlayer.create(this, R.raw.warehouse);
         }
         mPlayer.setOnErrorListener(this);
@@ -61,12 +73,10 @@ public class MusicService extends Service implements MediaPlayer.OnErrorListener
         mPlayer.setOnErrorListener(new OnErrorListener() {
             public boolean onError(MediaPlayer mp, int what, int
                     extra) {
-
                 onError(mPlayer, what, extra);
                 return true;
             }
         });
-
 
         mPlayer.start();
         return START_STICKY;
